@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="地方のママのためのリモートワーク準備ロードマップ">
+  <title>リモートワーク準備ロードマップ</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8f0f7 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      padding: 30px 20px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: #2c5f7c;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .progress-bar {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .progress-text {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .progress-track {
+      background: #e9ecef;
+      height: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, #7fb3d5 0%, #5a9dc7 100%);
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    .chapter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .chapter-card {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-left: 5px solid #e9ecef;
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .chapter-card.completed {
+      border-left-color: #7fb3d5;
+      background: linear-gradient(to right, #f8fbfd 0%, white 100%);
+    }
+
+    .chapter-card.current {
+      border-left-color: #f39c12;
+      box-shadow: 0 4px 20px rgba(243, 156, 18, 0.15);
+    }
+
+    .chapter-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .chapter-number {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: #f0f4f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #666;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .chapter-card.completed .chapter-number {
+      background: #7fb3d5;
+      color: white;
+    }
+
+    .chapter-card.current .chapter-number {
+      background: #f39c12;
+      color: white;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .chapter-title {
+      flex: 1;
+    }
+
+    .chapter-title h3 {
+      font-size: 16px;
+      color: #2c5f7c;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .chapter-title p {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    .chapter-content {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #f0f0f0;
+      display: none;
+    }
+
+    .chapter-card.active .chapter-content {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content-text {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .action-section {
+      background: #f8fbfd;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+
+    .action-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2c5f7c;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-title::before {
+      content: "→";
+      color: #7fb3d5;
+      font-size: 18px;
+    }
+
+    .action-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .action-item {
+      font-size: 13px;
+      color: #666;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .action-item::before {
+      content: "□";
+      position: absolute;
+      left: 0;
+      color: #7fb3d5;
+      font-size: 16px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-complete {
+      background: #7fb3d5;
+      color: white;
+    }
+
+    .btn-complete:hover {
+      background: #6a9ec7;
+      transform: translateY(-1px);
+    }
+
+    .btn-skip {
+      background: #f0f4f7;
+      color: #666;
+    }
+
+    .btn-skip:hover {
+      background: #e4e9ed;
+    }
+
+    .next-action-banner {
+      background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 25px;
+      box-shadow: 0 4px 20px rgba(243, 156, 18, 0.2);
+    }
+
+    .next-action-banner h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .next-action-banner p {
+      font-size: 14px;
+      opacity: 0.95;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+
+    .badge-complete {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge-current {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .encouragement {
+      text-align: center;
+      padding: 20px;
+      background: white;
+      border-radius: 15px;
+      margin-top: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .encouragement p {
+      color: #7fb3d5;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.7;
+    }
+
+    .reset-button {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .btn-reset {
+      background: #e74c3c;
+      color: white;
+      padding: 10px 30px;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-reset:hover {
+      background: #c0392b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>リモートワーク準備ロードマップ</h1>
+      <p>今すぐ働かなくてもいい。でも、選べる自分にはなっておこう。</p>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-text">あなたの進捗: <strong><span id="progress-percent">0</span>%</strong> 完了</div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <div id="next-action-container"></div>
+
+    <div class="chapter-list" id="chapter-list"></div>
+
+    <div class="encouragement">
+      <p>焦らず、一歩ずつ。<br>あなたのペースで大丈夫です ☺️</p>
+    </div>
+
+    <div class="reset-button">
+      <button class="btn-reset" onclick="resetProgress()">進捗をリセット</button>
+    </div>
+  </div>
+
+  <script>
+    const chapters = [
+      {
+        id: 1,
+        number: "01",
+        title: "まず知ってほしいこと",
+        subtitle: "「リモートワークが向いていない人」なんて、ほとんどいない",
+        content: "多くの方が「私には向いていないかも」と感じていますが、それは誤解です。リモートワークは特別なスキルが必要なものではなく、誰でも自分のペースで始められる働き方です。",
+        actions: [
+          "リモートワークのイメージを書き出してみる",
+          "「できない理由」ではなく「できそうなこと」を考えてみる",
+          "身近でリモートワークをしている人の話を聞いてみる"
+        ]
+      },
+      {
+        id: 2,
+        number: "02",
+        title: "今のあなたを知る",
+        subtitle: "無理しない働き方の"現在地"チェック",
+        content: "まずは今の自分を知ることから。生活リズム、得意なこと、使える時間を整理することで、無理のない働き方が見えてきます。",
+        actions: [
+          "1日の時間の使い方を書き出してみる（1週間分）",
+          "得意なこと・好きなことをリストアップする",
+          "「これだけは譲れない」という条件を3つ考える"
+        ]
+      },
+      {
+        id: 3,
+        number: "03",
+        title: "よくある不安を整理する",
+        subtitle: "みんな同じところでつまずいている",
+        content: "「スキルがない」「時間が作れない」「家族の理解が得られない」…実はみんな同じ不安を抱えています。不安の正体が分かれば、対処法も見えてきます。",
+        actions: [
+          "今感じている不安を全て書き出す",
+          "その不安は「事実」か「思い込み」か分けてみる",
+          "一つでも解決できそうなものを選ぶ"
+        ]
+      },
+      {
+        id: 4,
+        number: "04",
+        title: "あなたの大切にしたいこと",
+        subtitle: "「何を優先したいか」で働き方は変わる",
+        content: "収入、時間、やりがい、成長…何を一番大切にしたいかによって、選ぶべき働き方は変わります。正解はありません、あなたの「大切」を見つけましょう。",
+        actions: [
+          "働く理由を具体的に書き出す",
+          "5年後、どんな生活をしていたいか想像する",
+          "優先順位トップ3を決める"
+        ]
+      },
+      {
+        id: 5,
+        number: "05",
+        title: "リモートワークの種類を知る",
+        subtitle: "職種よりも「関わり方」で考えてみよう",
+        content: "事務作業、クリエイティブ、サポート業務、専門職…リモートワークには様々な形があります。職種名にとらわれず、どんな関わり方が自分に合うかを考えてみましょう。",
+        actions: [
+          "興味のある働き方を3つピックアップする",
+          "それぞれの働き方について調べてみる",
+          "実際にやっている人の体験談を読む"
+        ]
+      },
+      {
+        id: 6,
+        number: "06",
+        title: "あなたに合いそうな働き方タイプ",
+        subtitle: "がんばらない前提で選ぶという選択",
+        content: "完璧を目指さなくていい。今のあなたの状況で「これならできそう」と思える働き方を選ぶことが、続けられる秘訣です。",
+        actions: [
+          "自分の生活パターンに合う働き方タイプを選ぶ",
+          "「理想」ではなく「現実的」な選択をする",
+          "小さく始められるものを探す"
+        ]
+      },
+      {
+        id: 7,
+        number: "07",
+        title: "スキルより先に整えること",
+        subtitle: "続けられる人が最初にやっていたこと",
+        content: "スキルアップの前に、環境を整えることが大切です。作業スペース、家族の理解、時間の確保…土台があってこそ、スキルは活きてきます。",
+        actions: [
+          "作業できる場所を確保する",
+          "家族に働きたい気持ちを伝える",
+          "週に確保できる時間を見積もる"
+        ]
+      },
+      {
+        id: 8,
+        number: "08",
+        title: "小さな一歩の見つけ方",
+        subtitle: "今日からできることは、意外と少ない",
+        content: "大きな目標よりも、今日できる小さな一歩が大切。無理のない範囲で、できることから始めましょう。",
+        actions: [
+          "今週中にできる小さなアクションを1つ決める",
+          "情報収集の時間を週1回、30分確保する",
+          "できたことを記録する習慣をつける"
+        ]
+      },
+      {
+        id: 9,
+        number: "09",
+        title: "「まだ不安」があっても大丈夫",
+        subtitle: "迷いながら進んだ人たちのリアル",
+        content: "不安がなくなってから始める人はいません。みんな迷いながら、少しずつ前に進んでいます。完璧を待たなくていいのです。",
+        actions: [
+          "不安を感じても「それでも進む」と決める",
+          "同じように始めた人の体験を読む",
+          "小さな成功体験を積み重ねる"
+        ]
+      },
+      {
+        id: 10,
+        number: "10",
+        title: "次のステップのご案内",
+        subtitle: "一人で悩まなくていい場所があります",
+        content: "ここまで来たあなたは、もう十分準備ができています。次は実際に動き出すステップ。でも、一人で抱え込まなくて大丈夫です。",
+        actions: [
+          "コミュニティやサポートを探してみる",
+          "具体的な求人情報を見てみる",
+          "次回のイベントや勉強会に参加してみる"
+        ]
+      }
+    ];
+
+    let completedChapters = JSON.parse(localStorage.getItem('completedChapters') || '[]');
+    let activeChapterId = null;
+
+    function updateProgress() {
+      const percent = Math.round((completedChapters.length / chapters.length) * 100);
+      document.getElementById('progress-percent').textContent = percent;
+      document.getElementById('progress-fill').style.width = percent + '%';
+    }
+
+    function getNextChapter() {
+      return chapters.find(ch => !completedChapters.includes(ch.id));
+    }
+
+    function updateNextActionBanner() {
+      const container = document.getElementById('next-action-container');
+      const nextChapter = getNextChapter();
+      
+      if (nextChapter) {
+        container.innerHTML = `
+          <div class="next-action-banner">
+            <h3>🌟 次にやること</h3>
+            <p>${nextChapter.number}. ${nextChapter.title}</p>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="next-action-banner" style="background: linear-gradient(135deg, #27ae60 0%, #229954 100%);">
+            <h3>🎉 おめでとうございます！</h3>
+            <p>全てのステップを完了しました。次のステージへ進む準備ができています！</p>
+          </div>
+        `;
+      }
+    }
+
+    function renderChapters() {
+      const container = document.getElementById('chapter-list');
+      const nextChapter = getNextChapter();
+      
+      container.innerHTML = chapters.map(chapter => {
+        const isCompleted = completedChapters.includes(chapter.id);
+        const isCurrent = nextChapter && chapter.id === nextChapter.id;
+        const isActive = activeChapterId === chapter.id;
+        
+        let statusBadge = '';
+        if (isCompleted) statusBadge = '<span class="status-badge badge-complete">完了</span>';
+        else if (isCurrent) statusBadge = '<span class="status-badge badge-current">次はこれ</span>';
+        
+        return `
+          <div class="chapter-card ${isCompleted ? 'completed' : ''} ${isCurrent ? 'current' : ''} ${isActive ? 'active' : ''}" 
+               data-id="${chapter.id}">
+            <div class="chapter-header">
+              <div class="chapter-number">${isCompleted ? '✓' : chapter.number}</div>
+              <div class="chapter-title">
+                <h3>${chapter.title}${statusBadge}</h3>
+                <p>${chapter.subtitle}</p>
+              </div>
+            </div>
+            <div class="chapter-content">
+              <div class="content-text">${chapter.content}</div>
+              <div class="action-section">
+                <div class="action-title">今日からできるアクション</div>
+                <ul class="action-list">
+                  ${chapter.actions.map(action => `<li class="action-item">${action}</li>`).join('')}
+                </ul>
+              </div>
+              ${!isCompleted ? `
+                <div class="button-group">
+                  <button class="btn btn-complete" onclick="completeChapter(${chapter.id})">完了にする</button>
+                  <button class="btn btn-skip" onclick="toggleChapter(${chapter.id})">閉じる</button>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      document.querySelectorAll('.chapter-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (!e.target.classList.contains('btn')) {
+            const id = parseInt(card.dataset.id);
+            toggleChapter(id);
+          }
+        });
+      });
+    }
+
+    function toggleChapter(id) {
+      activeChapterId = activeChapterId === id ? null : id;
+      renderChapters();
+    }
+
+    function completeChapter(id) {
+      if (!completedChapters.includes(id)) {
+        completedChapters.push(id);
+        localStorage.setItem('completedChapters', JSON.stringify(completedChapters));
+      }
+      activeChapterId = null;
+      updateProgress();
+      updateNextActionBanner();
+      renderChapters();
+      
+      const nextChapter = getNextChapter();
+      if (nextChapter) {
+        setTimeout(() => {
+          activeChapterId = nextChapter.id;
+          renderChapters();
+          document.querySelector(`[data-id="${nextChapter.id}"]`).scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
+        }, 500);
+      }
+    }
+
+    function resetProgress() {
+      if (confirm('進捗をリセットしてもよろしいですか？')) {
+        completedChapters = [];
+        localStorage.removeItem('completedChapters');
+        activeChapterId = null;
+        updateProgress();
+        updateNextActionBanner();
+        renderChapters();
+      }
+    }
+
+    updateProgress();
+    updateNextActionBanner();
+    renderChapters();
+  </script>
+</body>
+</html>
+```
+
+4. 下にスクロールして「Commit new file」をクリック
+
+---
+
+## 🌐 **手順4: GitHub Pagesを有効化**
+
+1. リポジトリのページで「Settings」タブをクリック
+2. 左メニューから「Pages」を選択
+3. **Source** で「Deploy from a branch」を選択
+4. **Branch** で「main」を選択し「Save」
+
+**5分ほど待つと、URLが表示されます：**
+```
+https://あなたのユーザー名.github.io/remote-work-roadmap/
